@@ -222,18 +222,13 @@ def format_arrow_time( time ):
 
 #############
 
-
 if __name__ == "__main__":
-    # Standalone. 
-    app.debug = True
+    import uuid
+    app.secret_key = str(uuid.uuid4())
+    app.debug=CONFIG.DEBUG
     app.logger.setLevel(logging.DEBUG)
-    print("Opening for global access on port {}".format(CONFIG.PORT))
     app.run(port=CONFIG.PORT, host="0.0.0.0")
-else:
-    # Running from cgi-bin or from gunicorn WSGI server, 
-    # which makes the call to app.run.  Gunicorn may invoke more than
-    # one instance for concurrent service. 
-    app.debug=False
+
     
 
     
