@@ -31,97 +31,198 @@
 
 <h1>ACP Brevet Closing times</h1>
 
-  <!--
-  -- If there are any warnings or other messages from a prior
-  -- request to the server, 
-  -- they appear above the rest of the content, just until the next 
-  -- action.  (This is only on request/response transactions that
-  -- result in regenerating the page, not on every xmlhttp request.) 
-  -->
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
 
 <!-- Design on bootstrap grid -->
 <form role="form">
+
 <div class="row">
-  <div class="col-md-2">
-    <input type="text" class="form-control"
-     name="miles" value="Distance in miles"/>
-  </div>
-  <div class="col-md-4">
-    <input type="text" class="form-control"
-      name="location" value="location" />
-  </div>
-  <div class="col-md-4">
-    <span class="times form-control">(times)</span>
-  </div>
+    <div class="col-md-2">
+        <p><b>Brevet Distance in km: (200, 300, 400, 600, or 1000)</b></p>
+    </div>
+    <div class="col-md-1">
+       <input type="text" class="form-control"
+        name="BrevDist"/>
+    </div>
 </div>
 
 <div class="row">
-  <div class="col-md-2">
-    <input type="text" class="form-control"
-     name="miles" value="Distance in miles"/>
-  </div>
-  <div class="col-md-4">
-    <input type="text" class="form-control"
-      name="location" value="location" />
-  </div>
-  <div class="col-md-4">
-    <span class="times form-control">(times)</span>
-  </div>
+    <div class="col-md-2">
+        <p><b>Input distances are in (miles or km):</b></p>
+    </div>
+    <div class="col-md-1">
+        <input type="text" class="form-control"
+        name="InputUnit"/>
+    </div>
 </div>
 
 <div class="row">
-  <div class="col-md-2">
-    <input type="text" class="form-control"
-     name="miles" value="Distance in miles"/>
-  </div>
-  <div class="col-md-4">
-    <input type="text" class="form-control"
-      name="location" value="location" />
-  </div>
-  <div class="col-md-4">
-    <span class="times form-control">(times)</span>
-  </div>
+    <div class="col-md-2">
+        <p><b>Brevet Start Date and Start Time (Time is in 24 Hour Format, YYYY/MM/DD HH:MM):</b></p>
+    </div>
+    <div class="col-md-2">
+        <input type="text" class="form-control"
+        name="BrevetStartDateTime"/>
+    </div> 
 </div>
+
+<div class="row">
+    <div class="col-md-6">
+        <p id="message" class="message"></p>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-1">
+        <p><b>Checkpoint#</b></p>
+    </div>
+    <div class="col-md-2">
+        <p><b>Distance</b></p>
+    </div>
+    <div class="col-md-3">
+        <p><b>Location</b></p>
+    </div>
+    <div class="col-md-2">
+        <p><b>Open Date & Time</b></p>
+    </div>
+     <div class="col-md-2">
+        <p><b>Close Date & Time</b></p>
+    </div>
+</div>
+
+{% for x in range(1,11) %}
+    {%if x == 1%}
+        <div class="row">
+            <div class="col-md-1">
+                <p>{{x}}</p>
+            </div>
+            <div class="col-md-2">
+                <p>0 (start)</p>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control"
+                name="location" value="location (optional)" />
+            </div>
+            <div id="Check1Start" class="col-md-2">
+                <span class="times form-control">(Open Data & Time)</span>
+            </div>
+            <div id="Check1Close" class="col-md-2">
+                <span class="times form-control">(Close Data & Time)</span>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-1">
+                <p>{{x}}</p>
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control"
+                name="controle_dist" value="Distance"/>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control"
+                name="location" value="location (optional)" />
+            </div>
+            <div id="open" class="col-md-2">
+                <span class="times form-control">(Open Data & Time)</span>
+            </div>
+            <div id="close" class="col-md-2">
+                <span class="times form-control">(Close Data & Time)</span>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
 </form>
 
+
 <script type="text/javascript">
+    BrevDistance = 0; 
 
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  
 
   $(document).ready(function(){
    // Do the following when the page is finished loading
 
-      // When a field named 'miles' is changed ...
-      $('input[name="miles"]').change(
+      // COLLECT BREV DIST: here and in server
+      $('input[name="BrevDist"]').change(
           // ... execute this function
           function(){
-              var e_miles = $(this).val();
+              BrevDistance = parseInt($(this).val()); //save it here
+              console.log("yeesss hereee")
+              console.log(BrevDistance)
+              // AJAX request: save it in server
+              $.getJSON($SCRIPT_ROOT + '/save_brevdistance',
+                  // The object to pass to the server
+                  { brev_dist: BrevDistance },
+                  // The function to call with the response
+                  function(data) {
+                  }); // End of the call to getJSON
+          });  // End of the function to be called when field changes
+          
+      // COLLECT START DATE AND TIME: just in server
+      $('input[name="BrevetStartDateTime"]').change(
+          // ... execute this function
+          function(){
+              startDateTime = $(this).val();
+              $.getJSON($SCRIPT_ROOT + '/save_StartDateTime',
+                  { start_datetime: startDateTime  },
+                  function(data) {
+                  }); // End of the call to getJSON
+                  
+             $.getJSON($SCRIPT_ROOT + '/_calc_times',
+                  { controle_dist: 0 },
+                  function(data) {
+                     var open_time = data.result.open_time;
+                     var close_time = data.result.close_time;
+                     $('#Check1Start').text(open_time);
+                     $('#Check1Close').text(close_time);  
+                  }); // End of the call to getJSON
+            
+          });  // End of the function to be called when field changes
 
-              var target = $(this).parents(".row").find(".times");
+          
+          
+    // COLLECT INPUT UNIT: just in server
+      $('input[name="InputUnit"]').change(
+          // ... execute this function
+          function(){
+              InputUnit = $(this).val(); 
+              $.getJSON($SCRIPT_ROOT + '/save_InputUnit',
+                  // The object to pass to the server
+                  { input_unit: InputUnit  },
+                  // The function to call with the response
+                  function(data) {
+                  }); // End of the call to getJSON
+          });  // End of the function to be called when field changes
 
-              // DEBUG: How do I replace the 'times' field?
-              // alert("Content of the field I want to change: " +
-              //   target.html());
-
+    
+    
+      // When a field named 'miles' is changed ...
+      $('input[name="controle_dist"]').change(
+          // ... execute this function
+          function(){ 
+              var distance = $(this).val();
+              if(distance < BrevDistance)
+                $('#message').text("You have not reached the brevet distance yet. Continue typing in distances.")
+              else if(distance >= ((0.1 * BrevDistance) + BrevDistance))
+                $('#message').text("You have exceeded the brevet distance by 10% or more.")
+              else
+                $('#message').text("")
+                
+              var open_target = $(this).parents(".row").find("#open");
+              var close_target = $(this).parents(".row").find("#close");
               // AJAX request
               $.getJSON($SCRIPT_ROOT + '/_calc_times',
                   // The object to pass to the server
-                  { miles: e_miles },
+                  { controle_dist: distance },
                   // The function to call with the response
                   function(data) {
-                     var times = data.result;
-                     // alert("Got a response: " +  times);
-                     target.text(times);
+                     var open_time = data.result.open_time;
+                     var close_time = data.result.close_time;
+                     open_target.text(open_time);
+                     close_target.text(close_time);    
                   }); // End of the call to getJSON
           });  // End of the function to be called when field changes
               
