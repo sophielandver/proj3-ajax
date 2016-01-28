@@ -23,10 +23,10 @@ Case 1: if D is zero, i.e. it is the first controle, then the OD is 00:00. DONE.
 Case 2: if D is greater than the brevet distance, then for the remainder of this calculation assume D = the brevet distance and continue on to Case 3. <br />
 Case 3: To calculate the open duration of a controle at distance D we want to calculate what the earliest time at which someone can arrive to the controle is. Thus, to calculate the open duration we use maximum speeds (these are listed below). Now if the max speed was the same for all of the 1000 km, we would just do D/(max speed) and then a few clean up steps and then we would have our open duration. However, the max speed is not the same for all 1000 km and thus we often have to split up the calculation into a sum of quotients instead of just 1 quotient (and then of course do a few clean up steps). <br />
 Here are the maximum speeds we use: <br />
-	- for the first 200 km of D, i.e 0<=km<= 200, the max speed is 34 km/hr
-	- for the next 200 km of D, i.e. 200<km<=400, the max speed is 32 km/hr
-	- for the next 200 km of D, i.e. 400<km<=600, the max speed is 30 km/hr
-	- for the next 400 km of D, i.e. 600<km<=1000, the max speed is 28 km/hr
+	- for the first 200 km of D, i.e 0<=km<= 200, the max speed is 34 km/hr <br />
+	- for the next 200 km of D, i.e. 200<km<=400, the max speed is 32 km/hr <br />
+	- for the next 200 km of D, i.e. 400<km<=600, the max speed is 30 km/hr <br />
+	- for the next 400 km of D, i.e. 600<km<=1000, the max speed is 28 km/hr<br /> 
 
 Example Calculation: Calculate the open duration of controls at 0 km, 100 km, 200 km, 399 km, 400 km, and 405 km of a 400 km brevet. <br />
 1. open duration of controle at 0 km: This falls right into case 1 and thus the open duration, OD, is 00:00.<br />
@@ -41,8 +41,8 @@ Case 1: if D is zero, then the CD is 01:00 (this is just how it is set by rules)
 Case 2: if D is greater than or equal to the brevet distance than the CD is 13:30 for a 200 KM brevet, 20:00 for a 300 KM brevet, 27:00 for a 400 KM brevet, 40:00 for a 600 KM brevet, and 75:00 for a 1000 KM brevet. (again, this is just preset by the rules). DONE. <br />
 Case 3: If you didn't fall into case 1 or 2, then to calculate the close duration for a controle at distance D this is what you do: We want to calculate the latest time at which someone can arrive to the controle. Thus we will use minimum speeds (these are listed below). Again just like with open duration, the minimum speed is not the same for the whole 1000 km and thus we often have to split up the calculation into a sum of quotients instead of just 1 quotient (and then of course do a few clean up steps). <br />
 Here are the minimum speeds we use:<br />
-	- for the first 600 km of D, i.e 0<=km<= 600, the min speed is 15 km/hr
-	- for the next 400 km of D, i.e. 600<km<=1000, the min speed is 11.428 km/hr
+	- for the first 600 km of D, i.e 0<=km<= 600, the min speed is 15 km/hr <br />
+	- for the next 400 km of D, i.e. 600<km<=1000, the min speed is 11.428 km/hr <br />
 
 I will omit an example calculation for closing duration because the clean up steps and the way to split up the calculation into a sum of quotients have been shown in the open duration example problem. 
 
