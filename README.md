@@ -18,6 +18,7 @@ Reimplementation the RUSA ACP controle time calculator with flask and ajax
 ##Controle Time Calculation Rules
 In these instruction I will often use the phrase "clean up steps" and by that I just mean a few simple steps that we take in order to turn a number into clear hours and minutes; I will show an example of these "clean up steps" in the example below. In addition, in the calculation time is rounded to the nearest minute; this will be shown in the clean up steps in the below calculation. 
 
+###How to calculate open duration:
 Given a controle at distance D from the starting point, this is how you calculate the open duration, OD (again, once you have the open duration you simply add it to the start time of the brevet and then you obtain the open time of the controle): <br />
 Case 1: if D is zero, i.e. it is the first controle, then the OD is 00:00. DONE. <br />
 Case 2: if D is greater than the brevet distance, then for the remainder of this calculation assume D = the brevet distance and continue on to Case 3. <br />
@@ -36,6 +37,7 @@ Example Calculation: Calculate the open duration of controls at 0 km, 100 km, 20
 5. open duration for 400 km: 200/34 + (400-200)/32 --> (clean up) --> 12:08 <br />
 6. open duration for 405 km: this falls into case 2, thus D is now 400 km. Thus now the calculations are exactly the same as the calculations in #5 above. <br />
 
+###How to calculate close duration:
 Given a controle at distance D from the starting point, this is how you calculate the close duration, CD:<br />
 Case 1: if D is zero, then the CD is 01:00 (this is just how it is set by rules). DONE.  <br />
 Case 2: if D is greater than or equal to the brevet distance than the CD is 13:30 for a 200 KM brevet, 20:00 for a 300 KM brevet, 27:00 for a 400 KM brevet, 40:00 for a 600 KM brevet, and 75:00 for a 1000 KM brevet. (again, this is just preset by the rules). DONE. <br />
