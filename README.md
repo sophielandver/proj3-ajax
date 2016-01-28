@@ -26,7 +26,7 @@ Here are the maximum speeds we use: <br />
 	- for the first 200 km of D, i.e 0<=km<= 200, the max speed is 34 km/hr <br />
 	- for the next 200 km of D, i.e. 200<km<=400, the max speed is 32 km/hr <br />
 	- for the next 200 km of D, i.e. 400<km<=600, the max speed is 30 km/hr <br />
-	- for the next 400 km of D, i.e. 600<km<=1000, the max speed is 28 km/hr<br /> 
+	- for the next 400 km of D, i.e. 600<km<=1000, the max speed is 28 km/hr <br /> 
 
 Example Calculation: Calculate the open duration of controls at 0 km, 100 km, 200 km, 399 km, 400 km, and 405 km of a 400 km brevet. <br />
 1. open duration of controle at 0 km: This falls right into case 1 and thus the open duration, OD, is 00:00.<br />
